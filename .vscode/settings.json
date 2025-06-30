@@ -1,0 +1,6 @@
+{
+    "github.copilot.enable": {
+        "markdown": true
+    },
+    "github.copilot.chat.scopeSelection": true
+}
