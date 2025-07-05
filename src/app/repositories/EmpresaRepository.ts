@@ -6,11 +6,11 @@ import Bcrypt from "../../auth/bcrypt/bcrypt";
 export default class EmpresaRepository {
     private static repository = AppdataSource.getRepository(Empresa);
 
-    static async getEmpresas(): Promise<IEmpresa[]> {
+    static async find(): Promise<IEmpresa[]> {
         return this.repository.find();
     }
 
-    static async getEmpresaId(id: number): Promise<IEmpresa | null> {
+    static async findById(id: number): Promise<IEmpresa | null> {
         try {
             const empresa = await this.repository.findOneBy({ id });
             return empresa;
@@ -20,12 +20,21 @@ export default class EmpresaRepository {
         }
     }
 
+    static async findByEmail(email: string): Promise<IEmpresa | null> {
+        try{
+            const empresa = await this.repository.findOneBy({ email });
+            return empresa;
+        }catch (error) {
+            console.log("Erro ao buscar empresa por email:", error);
+            return null;
+        }
+    }
     static async saveEmpresa(empresa: IEmpresa): Promise<Empresa> {
-        const newEmpresa = await this.repository.save({
+        const newEmpresaEntity = await this.repository.create({
             email: empresa.email,
             password: empresa.password,
         });
-        return newEmpresa;
+        return await this.repository.save(newEmpresaEntity);
     }
 
     static async loginEmpresa(email: string, password: string): Promise<IEmpresa | null> {
