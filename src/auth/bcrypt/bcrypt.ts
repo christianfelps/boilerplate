@@ -1,6 +1,6 @@
 import * as bcrypt from 'bcrypt'
 
-export class Bcrypt{
+ class Bcrypt{
 
   async criptografarSenha(senha: string): Promise<string>{
 
@@ -14,3 +14,5 @@ export class Bcrypt{
   }
 
 }
+
+export default new Bcrypt();

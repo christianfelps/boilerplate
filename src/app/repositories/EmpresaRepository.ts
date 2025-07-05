@@ -1,39 +1,48 @@
-import empresa from "../entities/Empresa";
-import IEmpresa from "../interfaces/IEmpresa";
-import { AppdataSource } from "../../database/data_source"; 
-import { Bcrypt } from "../../auth/bcrypt/bcrypt";
-import { DataSource } from "typeorm";
 import Empresa from "../entities/Empresa";
+import IEmpresa from "../interfaces/IEmpresa";
+import { AppdataSource } from "../../database/data_source";
+import Bcrypt from "../../auth/bcrypt/bcrypt";
 
-const bcrypt: Bcrypt = new Bcrypt();
-const empresaRepository = AppdataSource.getRepository(empresa);
+export default class EmpresaRepository {
+    private static repository = AppdataSource.getRepository(Empresa);
 
-const getEmpresas =  (): Promise<IEmpresa[]> => {
-    return  empresaRepository.find();
+    static async getEmpresas(): Promise<IEmpresa[]> {
+        return this.repository.find();
+    }
+
+    static async getEmpresaId(id: number): Promise<IEmpresa | null> {
+        try {
+            const empresa = await this.repository.findOneBy({ id });
+            return empresa;
+        } catch (error) {
+            console.log("Erro ao buscar empresa:", error);
+            return null;
+        }
+    }
+
+    static async saveEmpresa(empresa: IEmpresa): Promise<Empresa> {
+        const newEmpresa = await this.repository.save({
+            email: empresa.email,
+            password: empresa.password,
+        });
+        return newEmpresa;
+    }
+
+    static async loginEmpresa(email: string, password: string): Promise<IEmpresa | null> {
+        try {
+            const empresa = await this.repository.findOneBy({ email });
+            if (!empresa) {
+                return null;
+            }
+            const isPasswordValid = await Bcrypt.compararSenhas(empresa.password, password);
+            if (!isPasswordValid) {
+                return null;
+            }
+            return empresa;
+        } catch (error) {
+            console.log("Erro ao buscar empresa:", error);
+            return null;
+        }
+    }
 }
-
-const getEmpresaId = async (id: number): Promise<IEmpresa | null> => {
-   try{
-     const empresaId = await empresaRepository.findOneBy({id: id})
-     
-    return empresaId
-}catch(error){
-    console.log("Erro ao buscar empresa:", error)
-    return null
-}
-}
-
-const saveEmpresa = async (empresa: IEmpresa): Promise<Empresa> => {
-   
-    
-    const newEmpresa = await empresaRepository.save({email: empresa.email,
-        password: await bcrypt.criptografarSenha(empresa.password)
-    })
-    return newEmpresa
-    
-}
-
-
-
-export default {getEmpresas, getEmpresaId, saveEmpresa};
 
