@@ -1,10 +1,13 @@
-interface IProduto {
+import Empresa from "../entities/Empresa";
+
+/**
+ * Define a estrutura de dados para um objeto Produto.
+ * Usado para garantir a tipagem correta ao passar dados de produtos pela aplicação.
+ */
+export default interface IProduto {
     id?: number;
     nome: string;
-    descricao: string;
     preco: number;
     quantidade: number;
-    empresaId: number; // ID da empresa associada ao produto
-    categoriaId?: number; // ID da categoria associada ao produto
-    imagemUrl?: string; // URL da imagem do produto
+    empresa: Empresa;
 }

@@ -1,7 +1,12 @@
-import { ForeignKey, MigrationInterface, QueryRunner, Table, TableForeignKey } from "typeorm";
+import { MigrationInterface, QueryRunner, Table } from "typeorm";
 
-export class CreateProdutosTable1711111111112 implements MigrationInterface {
-
+/**
+ * Classe de migração para criar a tabela de produtos.
+ */
+export class CreateProdutosTable1749506928651 implements MigrationInterface {
+  /**
+   * Executa a migração para criar a tabela 'produtos'.
+   */
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
@@ -17,14 +22,20 @@ export class CreateProdutosTable1711111111112 implements MigrationInterface {
           {
             name: "nome",
             type: "varchar",
-            length: "50",
+            // Ajustado para 100 para ser consistente com a entidade.
+            length: "100",
             isNullable: false
           },
           {
             name: "preco",
             type: "decimal",
-            precision: 10,
+            precision: 10, // Total de dígitos.
             scale: 2,
+            isNullable: false
+          },
+          {
+            name: "quantidade",
+            type: "integer",
             isNullable: false
           },
           {
@@ -32,31 +43,26 @@ export class CreateProdutosTable1711111111112 implements MigrationInterface {
             type: "int",
             isNullable: false
           },
-
         ],
+        // Define a chave estrangeira para conectar produtos a empresas.
         foreignKeys:[
           {
             name: "FK_Produto_Empresa",
-            columnNames: ["empresa_id"],
-            referencedTableName: "empresas",
-            referencedColumnNames: ["id"],
-            onDelete: "CASCADE"
-
+            columnNames: ["empresa_id"], // Coluna nesta tabela.
+            referencedTableName: "empresas", // Tabela de destino.
+            referencedColumnNames: ["id"], // Coluna na tabela de destino.
+            onDelete: "CASCADE" // Se uma empresa for deletada, seus produtos também serão.
           }
         ]
       })
     );
   }
 
+  /**
+   * Reverte a migração, apagando a tabela 'produtos'.
+   */
   public async down(queryRunner: QueryRunner): Promise<void> {
-    // Remove a foreign key primeiro
-    const table = await queryRunner.getTable("produtos");
-    const foreignKey = table!.foreignKeys.find(fk => fk.columnNames.indexOf("empresa_id") !== -1);
-    if (foreignKey) {
-      await queryRunner.dropForeignKey("produtos", foreignKey);
-    }
-
-    // Remove a tabela
+    // O TypeORM lida com a remoção da chave estrangeira automaticamente ao apagar a tabela.
     await queryRunner.dropTable("produtos");
   }
 }
