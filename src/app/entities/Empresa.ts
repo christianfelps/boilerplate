@@ -2,9 +2,10 @@ import { IsEmail, Length, length } from "class-validator";
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany, BeforeInsert } from "typeorm";
 import Produtos from "./Produto";
 import * as bcrypt from "bcrypt";
+import IEmpresa from "../interfaces/IEmpresa";
 
 @Entity('empresas')
-export default class Empresa{
+export default class Empresa implements IEmpresa {
     @PrimaryGeneratedColumn("increment")
     id!: number;
 

@@ -47,7 +47,9 @@ export default class EmpresaRepository {
             if (!isPasswordValid) {
                 return null;
             }
-            return empresa;
+            const { password: _, ...empresaWithoutPassword } = empresa; // Exclui a senha do retorno
+            return empresaWithoutPassword;
+           
         } catch (error) {
             console.log("Erro ao buscar empresa:", error);
             return null;

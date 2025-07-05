@@ -1,7 +1,6 @@
 import {Request, Response, Router} from 'express';
 import EmpresaRepository from '../repositories/EmpresaRepository';
 import IEmpresa from '../interfaces/IEmpresa';
-import Bcrypt  from '../../auth/bcrypt/bcrypt';
 const empresaRouter = Router();
 
 empresaRouter.get('/', async (_req: Request, res: Response) => {
@@ -55,7 +54,7 @@ empresaRouter.post('/cadastrar', async (req: Request, res: Response) => {
             return;
         }
         // TODO: Gerar e retornar um token JWT em vez dos dados da empresa
-        res.status(200).json(empresa);
+        res.status(200).json({"sucesso": "Login realizado com sucesso", });
     }catch (error) {
         console.error(error);
         res.status(500).json({ error: 'Erro ao realizar login' });
