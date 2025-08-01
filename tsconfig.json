@@ -1,9 +1,9 @@
 {
   "compilerOptions": {
-    "target": "ES6",               // Versão do JS alvo
-    "module": "CommonJS", 
+    "target": "ES2020",               // Versão do JS alvo
+    "module": "nodenext", 
     "lib": ["ES6"],              // Tipo de módulo
-    "moduleResolution": "node",       // Resolver imports como o Node
+    "moduleResolution": "nodenext",       // Resolver imports como o Node
     "outDir": "./dist",               // Pasta de saída
     "rootDir": "./src",               // Pasta de origem
     "esModuleInterop": true,          // Permitir import padrão de módulos CommonJS

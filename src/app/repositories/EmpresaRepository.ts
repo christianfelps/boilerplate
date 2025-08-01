@@ -58,6 +58,7 @@ export default class EmpresaRepository {
      * @returns Uma promessa que resolve para a nova entidade da empresa salva.
      */
     static async saveEmpresa(empresa: IEmpresa): Promise<Empresa> {
+        
         const newEmpresaEntity = await this.repository.create({
             email: empresa.email,
             password: empresa.password,

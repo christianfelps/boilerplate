@@ -2,5 +2,8 @@
     "github.copilot.enable": {
         "markdown": true
     },
-    "github.copilot.chat.scopeSelection": true
+    "github.copilot.chat.scopeSelection": true,
+    "github.copilot.advanced": {
+
+    }
 }
