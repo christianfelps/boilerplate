@@ -1,9 +1,21 @@
 import { Request, Response } from "express";
 import EmpresaRepository from "../../repositories/EmpresaRepository";
+import { validation } from "../../shared/middlewares";
+import { IParams } from "../../interfaces/IParams";
+import * as yup from "yup";
+
+
+export const getByIdValidation = validation((getSchema) => ({
+  params: getSchema<IParams>( yup.object().shape({
+    id: yup.number().integer().required().moreThan(0)
+    }))
+}));
+
 
 export const getById = async (req: Request, res: Response) => {
     // Converte o ID do parâmetro da rota para número.
     const  id : number = Number(req.params.id);
+    console.log( id ? 'achou' : 'nao')
     try{
     // Valida se o ID é um número válido e positivo.
     if(!id || id < 1){

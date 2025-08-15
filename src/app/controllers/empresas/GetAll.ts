@@ -2,12 +2,8 @@ import EmpresaRepository from "../../repositories/EmpresaRepository";
 import * as yup from "yup";
 import { validation } from "../../shared/middlewares";
 import { Request, Response } from "express";
+import IQueryProps from "../../interfaces/IQueryProps"
 
-interface IQueryProps {
-    page?: number;
-    limit?: number;
-    filter?: string;
-}
 
 
 export const getAllValidation = validation((getSchema) => ({

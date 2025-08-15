@@ -2,7 +2,7 @@ import "reflect-metadata";
 import 'dotenv/config'
 import { DataSource } from "typeorm";
 import { CreateTableEmpresa1749506301333 } from "./migrations/1749506301333-CreateTableEmpresa";
-import { CreateProdutosTable1711111111112 } from "./migrations/1749506928651-CreateProdutosTable";
+import { CreateProdutosTable1749506928651 } from "./migrations/1749506928651-CreateProdutosTable";
 import Empresa from "../app/entities/Empresa";
 import Produto from "../app/entities/Produto";
 export const AppdataSource = new DataSource({
@@ -15,7 +15,7 @@ export const AppdataSource = new DataSource({
     synchronize: true,
     logging: false,
     entities: [Empresa, Produto],
-    migrations: [CreateTableEmpresa1749506301333, CreateProdutosTable1711111111112],
+    migrations: [CreateTableEmpresa1749506301333, CreateProdutosTable1749506928651],
     subscribers: []
 
 })

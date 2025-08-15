@@ -1,6 +1,16 @@
 import IEmpresa from "../../interfaces/IEmpresa";
 import { Request, Response } from "express";
 import EmpresaRepository from "../../repositories/EmpresaRepository";
+import { validation } from "../../shared/middlewares";
+import * as yup from "yup";
+
+export const createValidation = validation((getSchema) => ({
+  body: getSchema<IEmpresa>( yup.object().shape({
+    id: yup.number().optional().integer().moreThan(0),
+    email: yup.string().required().min(10),
+    password: yup.string().required().min(8),
+    }))
+}));
 
 export const create = async (req: Request<{}, {}, IEmpresa >, res: Response) => {
    try {
