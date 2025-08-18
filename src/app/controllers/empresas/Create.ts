@@ -6,7 +6,7 @@ import * as yup from "yup";
 
 export const createValidation = validation((getSchema) => ({
   body: getSchema<IEmpresa>( yup.object().shape({
-    id: yup.number().optional().integer().moreThan(0),
+    id: yup.number().integer().optional().moreThan(0),
     email: yup.string().required().min(10),
     password: yup.string().required().min(8),
     }))
